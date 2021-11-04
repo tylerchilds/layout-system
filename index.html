@@ -1,0 +1,200 @@
+<!DOCTYPE html author="mailto:email@tychi.me" license="BSD 3-Clause">
+<html lang="en">
+  <head>
+    <title>Declarative Design System Demo</title>
+    <meta name="viewport" content="width=device-width">
+    <link href="./css/design-system-0.css" rel="stylesheet" id="design-system">
+    <style type="text/css">
+      html {
+        background: dodgerblue;
+        font-family: 'Avenir', 'Avenir Next','Helvetica Neue','Segoe UI', 'Verdana', sans-serif;
+        font-size: 16px;
+        line-height: 1.25;
+      }
+      main {
+        background: white;
+        border-radius: 1rem;
+        margin: 2rem auto;
+        max-width: 42rem;
+        padding: 1rem;
+      }
+      img { display: block; max-width: 100%; }
+      summary { font-weight: bold; font-size: 2rem; text-align: center; }
+      details {
+        background: white;
+        border-radius: 1rem;
+        margin: 1rem;
+        padding: 1rem;
+      }
+      main h1,
+      main p { margin: 1rem 0; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Declarative Design System Demo</h1>
+      <p>
+        I was inspired by the article
+        <a href="https://ishadeed.com/article/same-html-different-css/">
+          Same HTML, Different CSS
+        </a>.
+        This demo is slightly different in that all the examples are built with different grid approaches for education and awareness of browser support.
+      </p>
+      <p>
+        You can use grid in production today. <input type="checkbox" checked /> proselytization complete.
+      </p>
+      <p>
+        The Five Demos are mocked up in the following image:
+      </p>
+      <img src="./images/grid-mockup.png" alt="'the following image' that is the mock ups of the five demos" class="content--graphic__graphic" />
+    </main>
+
+    <details>
+      <summary>The Five Demos</summary>
+      <design-preview>
+        <noscript>The demo system requires JavaScript to be enabled.</noscript>
+        <section class="card">
+          <div class="entry">
+            <h1 class="entry__title">
+              Tech companies tried to help us spend less time on our phones. It didn’t work.
+            </h1>
+            <div class="entry__figure">
+              <img class="entry__image" src="https://placeimg.com/1280/640/tech?t=1582135501324" alt="">
+            </div>
+            <p class="entry__author">
+            <img class="avatar" src="https://www.tylerchilds.com/img/branding/self.jpg" alt="">
+            <span class="entry__author__meta">
+              By
+              <a href="https://www.tylerchilds.com">Tyler Childs</a>
+              <a href="https://twitter.com/tylerchilds">@tylerchilds</a>
+            </span>
+            </p>
+            <ul class="list">
+              <li class="list__item">
+                <a class="tag" href="#">Design</a>
+              </li>
+              <li class="list__item">
+                <a class="tag" href="#">Tech</a>
+              </li>
+              <li class="list__item">
+                <a class="tag" href="#">Business</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </design-preview>
+    </details>
+
+    <script type="module">
+      import './scripts/proto-accordion.js'
+      import tag from 'https://thelanding.page/tag/tag.js'
+
+      const designSystem = document.getElementById('design-system')
+      const designSystemIds = [1, 2, 3, 4, 5]
+
+      const { html, css, on, get, set } = tag('design-preview', {
+        withLines: false,
+        designSystemId: 1,
+      })
+
+      on('click', '.tab', function({ target }) {
+        const { id } = target.dataset
+        set({ designSystemId: parseInt(id) })
+      })
+
+      on('change', '#with-lines', function({ target }) {
+        set({ withLines: target.checked })
+      })
+
+      html((target) => {
+        const { designSystemId } = get()
+
+        designSystem.href = `./css/design-system-${designSystemId}.css`
+
+        if(!target.ogHTML) {
+          target.ogHTML = target.innerHTML
+        }
+
+        return `
+          <div class="tabs">
+            ${tabs(designSystemId)}
+          </div>
+          <div class="grid">
+            ${target.ogHTML}
+            ${screenshot(designSystemId)}
+          </div>
+        `
+      })
+
+      function tabs(active) {
+        return designSystemIds.map(id => `
+          <button class="tab
+            ${id === active ? 'active' : ''}" data-id="${id}">
+            Design ${id}
+          </button>
+        `).join('')
+      }
+
+      function screenshot(active) {
+        const { designSystemId, withLines } = get()
+
+        const src = `./images/grid-${designSystemId}${withLines
+          ? '-with-lines' : ''}.png`
+
+        return `
+          <div class="preview">
+            Mockup
+            <input
+              type="checkbox"
+              id="with-lines" name="with-lines"
+              ${withLines ? 'checked' : ''}
+            >
+            <label for="with-lines">
+              With Lines
+            </label>
+            <img src="${src}" alt="demo image" />
+          </div>
+        `
+      }
+
+      css(`
+        & .tabs {
+          border-block: 5px dotted lime;
+          padding: 1rem 0;
+          margin: 1rem;
+          text-align: center;
+        }
+
+        & .tab {
+          background: orange;
+          border: none;
+          border-radius: 1rem;
+          color: black;
+          font-weight: bold;
+          font-size: 1.25rem;
+          padding: .5rem;
+          margin: .5rem;
+        }
+
+        & .tab:hover,
+        & .tab:focus {
+          background: lime;
+        }
+
+        & .tab:active,
+        & .tab.active {
+          background: rebeccapurple;
+          color: white;
+        }
+
+        & .preview {
+          margin: 1rem 0;
+          padding: 1rem 0;
+          text-align: center;
+        }
+
+        & .preview img { margin: 2rem auto 0; }
+      `)
+    </script>
+  </body>
+</html>

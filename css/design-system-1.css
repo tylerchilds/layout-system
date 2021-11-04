@@ -1,0 +1,68 @@
+.card ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card h1,
+.card p {
+  margin: 0;
+}
+
+.card a {
+  text-decoration: none;
+}
+
+.entry {
+  display: grid;
+  grid-template-rows: [tabs] auto [title] auto [figure] auto [author] auto;
+  max-width: 640px;
+  gap: 20px;
+  margin: 20px auto;
+}
+
+.entry__title {
+  grid-row: title;
+}
+
+.entry__figure {
+  grid-row: figure;
+  border-radius: 10px;
+}
+
+.entry__author {
+  grid-row: author;
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  grid-row: tabs;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 10px;
+  justify-content: left;
+}
+
+.tag {
+  background: #FFEEAF;
+  border-radius: 20px;
+  text-decoration: none;
+  padding: 5px 15px;
+  margin-right: 10px;
+}
+
+.tag:link,
+.tag:visited,
+.tag:hover,
+.tag:focus,
+.tag:active {
+  color: black;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  margin-right: 10px;
+}
