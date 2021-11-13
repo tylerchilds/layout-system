@@ -1,11 +1,9 @@
 .card ul {
   list-style-type: none;
-  margin: 0;
 }
 
 .card h1,
 .card p {
-  margin: 0;
 }
 
 .entry {
@@ -25,6 +23,7 @@
   z-index: 1;
   background: #FFEEAF;
   padding: 20px;
+  margin: 0 2rem;
 }
 
 .entry__figure {
@@ -53,6 +52,7 @@
   align-self: start;
   background: #FFEEAF;
   border-radius: 0 0 10px 10px;
+  margin: 0 2rem;
   margin-bottom: 60px !important;
   padding: 20px;
 }
@@ -60,16 +60,18 @@
 .list {
   grid-row: tabs;
   grid-column: content;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-gap: 10px;
-  padding: 20px;
+  display: block;
   justify-content: center;
   z-index: 1;
-  align-self: end;
   background: #FFEEAF;
   border-radius: 10px 10px 0 0;
   padding: 1rem 0;
+  margin: 0 2rem;
+}
+
+.list__item {
+  display: inline-block;
+  margin: 5px;
 }
 
 .tag {
